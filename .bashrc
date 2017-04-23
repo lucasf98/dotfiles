@@ -14,6 +14,24 @@ export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W \$ \[\033[00m\]'
 
 shopt -s nocaseglob
 
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+case $TERM in
+	xterm*|dtterm|Eterm|eterm)
+		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+		;;
+	screen)
+		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+		;;
+esac
+
+function word()
+{
+	grep $* /usr/share/dict/web2 
+}
+
+alias config='/usr/bin/git --git-dir=/Users/luke/.cfg/ --work-tree=/Users/luke'
 alias ls="ls -G"
 alias l="ls -al"
 alias ..="cd .."
@@ -37,22 +55,3 @@ alias sr2d2="ssh root:openelec@192.168.1.129"
 alias sp="ssh root@iphone"
 alias ss="( ssh mythtv@chewbacca esd -nobeeps -tcp -public -terminate -r 44100 ) & sleep 4 ; esdrec -r 44100 | esdcat -r 44100 -s chewbacca"
 alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
-#alias killsound="ssh mythtv@vader killall esd"
-
-bind '"\e[A":history-search-backward'
-bind '"\e[B":history-search-forward'
-
-case $TERM in
-	xterm*|dtterm|Eterm|eterm)
-		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-		;;
-	screen)
-		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-		;;
-esac
-
-function word()
-{
-	grep $* /usr/share/dict/web2 
-}
-alias config='/usr/bin/git --git-dir=/Users/luke/.cfg/ --work-tree=/Users/luke'
