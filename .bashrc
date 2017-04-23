@@ -31,7 +31,7 @@ function word()
 	grep $* /usr/share/dict/web2 
 }
 
-alias config='/usr/bin/git --git-dir=/Users/luke/.cfg/ --work-tree=/Users/luke'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias ls="ls -G"
 alias l="ls -al"
 alias ..="cd .."
