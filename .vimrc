@@ -33,7 +33,7 @@ if &t_Co > 2 || has("gui_running")
     set colorcolumn=+1
 endif
 
-set t_Co=256
+let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
 
@@ -79,7 +79,6 @@ set backspace=indent,eol,start
 set cinoptions=:0,p0,t0
 set cinwords=if,else,while,do,for,switch,case
 set formatoptions=tcqr
-
 
 set showcmd                 " show command in the last line of the screen
 set ruler                   " always show the ruler
