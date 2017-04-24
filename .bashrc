@@ -32,7 +32,7 @@ function word()
 }
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias ls="ls -G"
+alias ls="ls -color=auto"
 alias l="ls -al"
 alias ..="cd .."
 alias psh="pushd"
