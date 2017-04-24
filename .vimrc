@@ -2,6 +2,10 @@ set nocompatible
 filetype off
 
 " Plugins {{{
+" 
+" First, install Vundle:
+" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/tools/powerline/powerline/bindings/vim
 

@@ -56,3 +56,8 @@ alias sr2d2="ssh root:openelec@192.168.1.129"
 alias sp="ssh root@iphone"
 alias ss="( ssh mythtv@chewbacca esd -nobeeps -tcp -public -terminate -r 44100 ) & sleep 4 ; esdrec -r 44100 | esdcat -r 44100 -s chewbacca"
 alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
+
+# Source local definitions
+if [ -f $HOME/.bashrc.local ]; then
+	. $HOME/.bashrc.local
+fi
