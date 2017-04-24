@@ -78,7 +78,7 @@ set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
 set nowrap                  " turn off automatic line wrapping
-set ai                      " set auto-indenting for programming
+set autoindent              " set auto-indenting for programming
 set noerrorbells            " turn off the bells
 set showmatch               " automatically show matching brackets
 set incsearch               " enable incremental search
@@ -87,12 +87,14 @@ set ignorecase              " ignore case in searches
 set smartcase               " ...unless it contains uppercase letters
 set lazyredraw              " do not redraw while executing macros
 set shiftwidth=4            " width for auto indent, <<, >>
+set smarttab                " insert blanks at line start
 set tabstop=4               " width for tab stops
 set softtabstop=4           " width for soft tab stops tab (tabs while editing)
 set expandtab               " uses spaces, not tabs
 set backspace=indent,eol,start
 set cinoptions=:0,p0,t0
 set cinwords=if,else,while,do,for,switch,case
+set listchars=tab:>-,trail:.,extends:>,precedes:<
 set formatoptions=tcqr
 
 set showcmd                 " show command in the last line of the screen
@@ -100,21 +102,32 @@ set ruler                   " always show the ruler
 set laststatus=2            " always show the status line
 set scrolloff=3             " preserve three lines of context
 
+set diffopt=iwhite,icase,vertical,filler,context:4
+
 set foldopen=block,mark,percent,quickfix,search,tag,undo
 " }}}
 
 " General Mappings {{{
 let mapleader=","           " change the leader to be a comma vs slash
 let maplocalleader="\\"     " change the leader to be a comma vs slash
-map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+noremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " sudo write this
-cmap W! w !sudo tee % >/dev/null
+cnoremap W! w !sudo tee % >/dev/null
 " open/close the quickfix window
-nmap <leader>c :copen<CR>
-nmap <leader>cc :cclose<CR>
+nnoremap <leader>c :copen<CR>
+nnoremap <leader>cc :cclose<CR>
 vnoremap p <Esc>:let curren_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
-map <F2> @q
-map <F3> :noh<CR>
+
+nnoremap <leader>d :execute 'NERDTreeToggle'<CR>
+nnoremap <leader><leader> <c-^>
+
+" function keys {{{
+nnoremap <F2> @q
+nnoremap <F3> :noh<CR>
+nnoremap <F4> :%s///g<CR>''
+nnoremap <F5> :set list!<CR>:set list?<CR>
+nnoremap <F6> :set number!<CR>:set number?<CR>
+" }}}
 
 " easier navigation betwen splits - no need for CTRL-W before each
 noremap <c-h> <c-w>h
@@ -163,7 +176,7 @@ augroup END
 " XML file settings {{{
 augroup filetype_xml
     autocmd!
-    autocmd BufRead *.xml set synmaxcol=120           
+    autocmd BufRead *.xml set synmaxcol=200           
 augroup END
 " }}}
 
@@ -188,6 +201,19 @@ augroup misc
     autocmd BufNewFile,BufRead *.m set filetype=matlab
     autocmd FileType text setlocal textwidth=79
 augroup END
+" }}}
+
+" Windows Specific Settings {{{
+"let g:my_vim_dir=expand("$HOME/Documents/.vim")
+"if has("win16") || has("win32") || has("win64")
+"    execute "set rtp^=".g:my_vim_dir
+"    execute "set rtp+=".g:my_vim_dir."\\after"
+"    let &rtp=substitute(&rtp,"[/]","\\","g")
+"
+"    if &shell=~#'bash$'
+"        set shell=$COMSPEC
+"    endif
+"endif
 " }}}
 
 if filereadable($HOME . "./.vimrc.local")
