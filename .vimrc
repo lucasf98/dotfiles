@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 
-" update the runtime path
+" Plugins {{{
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/tools/powerline/powerline/bindings/vim
 
@@ -23,6 +23,12 @@ call vundle#end()
 
 filetype on
 filetype plugin indent on
+" }}}
+
+" Highlights and Colors {{{
+hi BadWhitespace ctermbg=red guibg=darkred
+hi Folded guibg=grey20 guifg=Cyan ctermbg=DarkBlue ctermfg=Grey
+hi Search ctermfg=black ctermbg=yellow
 
 let g:ycm_autoclose_preview_window_after_completion=1
 let python_highlight_all=1
@@ -36,8 +42,9 @@ endif
 let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
+" }}}
 
-" Use The Silver Searcher (https://github.com/ggreer/the_silver_searcher)
+" Use The Silver Searcher (https://github.com/ggreer/the_silver_searcher) {{{
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup
@@ -49,10 +56,14 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+" }}}
 
+" Basic Settings {{{
 set clipboard=unnamed
 set encoding=utf-8
 set number
+set relativenumber
+set numberwidth=5
 set title
 set wildmenu
 set wildmode=full
@@ -85,57 +96,96 @@ set ruler                   " always show the ruler
 set laststatus=2            " always show the status line
 set scrolloff=3             " preserve three lines of context
 
+set foldopen=block,mark,percent,quickfix,search,tag,undo
+" }}}
+
+" General Mappings {{{
 let mapleader=","           " change the leader to be a comma vs slash
+let maplocalleader="\\"     " change the leader to be a comma vs slash
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" Reload Vimrc
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
- " sudo write this
+" sudo write this
 cmap W! w !sudo tee % >/dev/null
 " open/close the quickfix window
 nmap <leader>c :copen<CR>
 nmap <leader>cc :cclose<CR>
 vnoremap p <Esc>:let curren_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
-inoremap jk <ESC>
-inoremap kj <ESC>
 map <F2> @q
 map <F3> :noh<CR>
 
 " easier navigation betwen splits - no need for CTRL-W before each
-map <c-h> <c-w>h
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-imap <c-w> <c-o><c-w>       
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+inoremap <c-w> <c-o><c-w>       
+" capitalize the a word in insert mode/normal mode
+inoremap <c-u> <esc>gUiw`]a
+nnoremap <c-u> gUiw`]
+" page up/page down
+nnoremap - <c-b>
+nnoremap <space> <c-f>
+" edit and source vimrc
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+" surround with double quotes/single quotes
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+" stop reaching for ESC
+inoremap <esc> <nop>
+inoremap jk <ESC>
+inoremap kj <ESC>
+" }}}
 
-" Highlights
-hi BadWhitespace ctermbg=red guibg=darkred
-hi Folded guibg=grey20 guifg=Cyan ctermbg=DarkBlue ctermfg=Grey
-hi Search ctermfg=black ctermbg=yellow
+" Abbreviations {{{
+iabbrev adn and
+" }}}
 
-set foldopen=block,mark,percent,quickfix,search,tag,undo
+" C/C++ settings {{{
+augroup filetype_c_cpp
+    autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.cxx setlocal foldmethod=syntax
+    autocmd BufWinLeave *.c,*.h,*.cpp,*.cxx mkview
+    autocmd BufWinEnter *.c,*.h,*.cpp,*.cxx silent loadview
+augroup END
+" }}}
 
-" C/C++ settings
-autocmd BufNewFile,BufRead *.c,*.h,*.cpp,*.cxx setlocal foldmethod=syntax
-autocmd BufWinLeave *.c,*.h,*.cpp,*.cxx mkview
-autocmd BufWinEnter *.c,*.h,*.cpp,*.cxx silent loadview
+"vim file settings {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim nnoremap <buffer> <localleader>c I"<esc>
+augroup END
+" }}}
 
-" Other file type settings
-autocmd BufNewFile,BufRead *.m set filetype=matlab
-autocmd FileType text setlocal textwidth=79
+" XML file settings {{{
+augroup filetype_xml
+    autocmd!
+    autocmd BufRead *.xml set synmaxcol=120           
+augroup END
+" }}}
 
-" Disable long line syntax highlighting for XML files
-autocmd BufRead *.xml set synmaxcol=120           
+" Python settings {{{
+augroup filetype_python
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
+    autocmd FileType python :iabbrev <buffer> iff if:<left>
+    autocmd BufWinLeave *.py mkview
+    autocmd BufWinEnter *.py silent loadview
+    autocmd BufNewFile,BufRead *.py
+        \ set textwidth=79 |
+        \ set autoindent |
+        \ set fileformat=unix |
+        \ match BadWhitespace /\s\+$/
+augroup END
+" }}}
 
-" Python settings
-autocmd BufWinLeave *.py mkview
-autocmd BufWinEnter *.py silent loadview
-autocmd BufNewFile,BufRead *.py
-    \ set textwidth=79 |
-    \ set autoindent |
-    \ set fileformat=unix |
-    \ match BadWhitespace /\s\+$/
+" Other file type settings {{{
+augroup misc
+    autocmd!
+    autocmd BufNewFile,BufRead *.m set filetype=matlab
+    autocmd FileType text setlocal textwidth=79
+augroup END
+" }}}
 
 if filereadable($HOME . "./.vimrc.local")
     source ~/.vimrc.local
 endif
-
