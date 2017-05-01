@@ -13,12 +13,12 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 
 " install powerline fonts from https://github.com/powerline/fonts
 Plugin 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim' }
@@ -30,7 +30,7 @@ filetype plugin indent on
 " }}}
 
 " Highlights and Colors {{{
-hi BadWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * hi BadWhitespace ctermbg=red guibg=darkred
 hi Folded guibg=grey20 guifg=Cyan ctermbg=DarkBlue ctermfg=Grey
 hi Search ctermfg=black ctermbg=yellow
 
@@ -110,7 +110,6 @@ set foldopen=block,mark,percent,quickfix,search,tag,undo
 " General Mappings {{{
 let mapleader=","           " change the leader to be a comma vs slash
 let maplocalleader="\\"     " change the leader to be a comma vs slash
-noremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " sudo write this
 cnoremap W! w !sudo tee % >/dev/null
 " open/close the quickfix window
@@ -127,6 +126,7 @@ nnoremap <F3> :noh<CR>
 nnoremap <F4> :%s///g<CR>''
 nnoremap <F5> :set list!<CR>:set list?<CR>
 nnoremap <F6> :set number!<CR>:set number?<CR>
+nnoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " }}}
 
 " easier navigation betwen splits - no need for CTRL-W before each
@@ -147,10 +147,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " surround with double quotes/single quotes
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-" stop reaching for ESC
-inoremap <esc> <nop>
-inoremap jk <ESC>
-inoremap kj <ESC>
 " }}}
 
 " Abbreviations {{{
