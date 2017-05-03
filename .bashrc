@@ -15,7 +15,6 @@ export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W \$ \[\033[00m\]'
 
 shopt -s nocaseglob
 shopt -s histappend
-shopt -s autocd
 shopt -s cdspell
 
 bind '"\e[A":history-search-backward'
@@ -54,11 +53,7 @@ alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
 
-if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
-    # Cygwin specific config
-    echo Welcome to Cygwin!
-    alias open="cygstart"
-elif [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ]; then
     # macOS specific config
     echo Welcome to macOS!
     alias ls="ls -G"
@@ -68,6 +63,10 @@ elif [ "$(uname)" == "Darwin" ]; then
     alias sp="ssh root@iphone"
     alias ss="( ssh mythtv@chewbacca esd -nobeeps -tcp -public -terminate -r 44100 ) & sleep 4 ; esdrec -r 44100 | esdcat -r 44100 -s chewbacca"
     alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
+elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+    # Cygwin specific config
+    echo Welcome to Cygwin!
+    alias open="cygstart"
 fi
 
 # Source local definitions
