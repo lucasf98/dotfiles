@@ -72,6 +72,11 @@ fi
 # Python Configuration
 export PYTHONSTARTUP=$HOME/.pythonrc
 
+# Source Git Completion
+if [ -f $HOME/git-completion.sh ]; then
+    . $HOME/git-completion.bash
+fi
+
 # Source local definitions
 if [ -f $HOME/.bashrc.local ]; then
 	. $HOME/.bashrc.local
