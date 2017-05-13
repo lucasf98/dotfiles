@@ -69,6 +69,9 @@ elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
     alias open="cygstart"
 fi
 
+# Python Configuration
+export PYTHONSTARTUP=$HOME/.pythonrc
+
 # Source local definitions
 if [ -f $HOME/.bashrc.local ]; then
 	. $HOME/.bashrc.local
