@@ -139,7 +139,8 @@ inoremap <c-w> <c-o><c-w>
 inoremap <c-u> <esc>gUiw`]a
 nnoremap <c-u> gUiw`]
 " page up/page down
-nnoremap - <c-b>
+nmap <c-@> <c-space>
+nnoremap <c-space> <c-b>
 nnoremap <space> <c-f>
 " edit and source vimrc
 nnoremap <leader>ev :split $MYVIMRC<cr>
