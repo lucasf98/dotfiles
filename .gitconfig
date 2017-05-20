@@ -1,0 +1,10 @@
+[alias]
+	last = log -1 HEAD
+	lg = log --oneline --graph --decorate --all
+	co = checkout
+	br = branch
+	st = status
+	ci = commit
+
+[include]
+    path = ~/.gitconfig.local
