@@ -5,6 +5,7 @@
 	br = branch
 	st = status
 	ci = commit
+	ls = ls-tree -r master --name-only
 
 [include]
     path = ~/.gitconfig.local
