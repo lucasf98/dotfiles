@@ -6,6 +6,7 @@
 	st = status
 	ci = commit
 	ls = ls-tree -r master --name-only
+	unstage = reset HEAD --
 
 [include]
     path = ~/.gitconfig.local
