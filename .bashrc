@@ -67,6 +67,8 @@ elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
     # Cygwin specific config
     echo Welcome to Cygwin!
     alias open="cygstart"
+    export BROWSER='/usr/bin/cygstart %s'
+    export TERM=cygwin
 fi
 
 # Python Configuration
