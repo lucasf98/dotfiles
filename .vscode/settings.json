@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+    "editor.fontSize" : 14,
+    "editor.fontLigatures": true
+}
