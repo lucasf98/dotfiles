@@ -1,14 +1,14 @@
 [alias]
-	last = log -1 HEAD
-	lg = log --oneline --graph --decorate --all
-	co = checkout
-	br = branch
-	st = status
-	ci = commit
-	ls = ls-tree -r master --name-only
-	unstage = reset HEAD --
+    last = log -1 HEAD
+    lg = log --oneline --graph --decorate --all
     lol = log --oneline --graph --decorate
     lola = log --oneline --graph --decorate --all
+    co = checkout
+    br = branch
+    st = status
+    ci = commit
+    ls = ls-tree -r master --name-only
+    unstage = reset HEAD --
     whatadded = log --diff-filter=A --
 
 [include]
