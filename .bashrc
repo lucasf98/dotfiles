@@ -52,6 +52,7 @@ alias vi="vim"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
+alias g='git'
 
 if [ "$(uname)" == "Darwin" ]; then
     # macOS specific config
@@ -67,6 +68,7 @@ elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
     # Cygwin specific config
     echo Welcome to Cygwin!
     alias open="cygstart"
+    alias bfg='java -jar c://cygwin64//home//lmfranka//bin//bfg.jar'
     export BROWSER='/usr/bin/cygstart %s'
     export TERM=cygwin
 fi
