@@ -7,6 +7,9 @@
 	ci = commit
 	ls = ls-tree -r master --name-only
 	unstage = reset HEAD --
+    lol = log --oneline --graph --decorate
+    lola = log --oneline --graph --decorate --all
+    whatadded = log --diff-filter=A --
 
 [include]
     path = ~/.gitconfig.local
