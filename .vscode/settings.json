@@ -4,5 +4,6 @@
     "workbench.colorTheme": "Solarized Dark",
     "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
     "editor.fontSize" : 14,
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "vim.disableAnnoyingNeovimMessage": true
 }
