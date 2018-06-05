@@ -54,7 +54,13 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias g='git'
 
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Linux" ]; then
+    # linux specific config
+    echo Welcome to Linux!
+    alias open="xdg-open"
+    alias copy="xsel -ib"
+elif [ "$(uname)" == "Darwin" ]; then
+    echo Welcome to macOS!
     # macOS specific config
     echo Welcome to macOS!
     alias ls="ls -G"
@@ -64,10 +70,12 @@ if [ "$(uname)" == "Darwin" ]; then
     alias sp="ssh root@iphone"
     alias ss="( ssh mythtv@chewbacca esd -nobeeps -tcp -public -terminate -r 44100 ) & sleep 4 ; esdrec -r 44100 | esdcat -r 44100 -s chewbacca"
     alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
+    alias copy='pbcopy'
 elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
     # Cygwin specific config
     echo Welcome to Cygwin!
     alias open="cygstart"
+    alias copy="putclip"
     alias bfg='java -jar c://cygwin64//home//lmfranka//bin//bfg.jar'
     export BROWSER='/usr/bin/cygstart %s'
     export TERM=cygwin
