@@ -60,7 +60,6 @@ if [ "$(uname)" == "Linux" ]; then
     alias open="xdg-open"
     alias copy="xsel -ib"
 elif [ "$(uname)" == "Darwin" ]; then
-    echo Welcome to macOS!
     # macOS specific config
     echo Welcome to macOS!
     alias ls="ls -G"
