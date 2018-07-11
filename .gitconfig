@@ -11,8 +11,14 @@
     unstage = reset HEAD --
     whatadded = log --diff-filter=A --
 
+[core]
+    excludesFile = ~/.gitignore
+
 [include]
     path = ~/.gitconfig.local
 
 [credential]
     helper = cache --timeout=360000
+
+[color]
+    ui = auto
