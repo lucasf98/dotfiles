@@ -70,6 +70,7 @@ elif [ "$(uname)" == "Darwin" ]; then
     alias ss="( ssh mythtv@chewbacca esd -nobeeps -tcp -public -terminate -r 44100 ) & sleep 4 ; esdrec -r 44100 | esdcat -r 44100 -s chewbacca"
     alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
     alias copy='pbcopy'
+    alias matlab='/Applications/MATLAB_R2017b.app/bin/matlab -nodesktop -nosplash'
 elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
     # Cygwin specific config
     echo Welcome to Cygwin!
