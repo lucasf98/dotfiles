@@ -94,11 +94,18 @@ if [ -f $HOME/.bashrc.local ]; then
 	. $HOME/.bashrc.local
 fi
 
-# Source Git Bash Prompt
+# Git Bash Prompt
+function git_prompt {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo " ("${ref#refs/heads/}")"
+}
+
 if [ -f $HOME/.bash-git-prompt/gitprompt.sh ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
     source $HOME/.bash-git-prompt/gitprompt.sh
 else
     echo 'Bash Git Prompt is not installed. Install with:'
     echo '  cd ~ && git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1'
+
+    export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W\[\033[35m\]$(git_prompt)\[\033[36m\] \$ \[\033[00m\]'
 fi
