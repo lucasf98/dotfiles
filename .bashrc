@@ -22,8 +22,31 @@ export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W \$ \[\033[00m\]'
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
-function word()
-{
+case $TERM in
+	xterm*|dtterm|Eterm|eterm)
+		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
+		;;
+	screen)
+		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
+		;;
+esac
+
+function eecoex() {
+     echo ==== $1 ====
+     adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body $1
+     adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body EXECUTE
+}
+
+function wait_for_eecoex() {
+    while [ -z ]; do
+      adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body STATUS > /dev/null
+      i=`adb shell 'cat /storage/emulated/0/Android/data/com.google.eecoexer/files/slave_ack'`
+      if [ $i -eq 0 ]; then break; fi;
+      sleep 5
+    done
+}
+
+function word() {
     grep $* /usr/share/dict/web2
 }
 
@@ -42,6 +65,10 @@ function adbv() {
   adb pull "$1" "$TEMPFILE"
   vim "$TEMPFILE"
   adb push "$TEMPFILE" "$1"
+}
+
+function rg() {
+    grep -rin "$@" .
 }
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
