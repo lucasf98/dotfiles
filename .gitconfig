@@ -4,12 +4,14 @@
     lol = log --oneline --graph --decorate
     lola = log --oneline --graph --decorate --all
     co = checkout
+    cob = checkout -b
     br = branch
     st = status
     ci = commit
     ls = ls-tree -r master --name-only
     unstage = reset HEAD --
     whatadded = log --diff-filter=A --
+    pushreview = push origin HEAD:refs/for/master
 
 [core]
     excludesFile = ~/.gitignore
