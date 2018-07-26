@@ -1,16 +1,15 @@
 # .bashrc
 
 # Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+[[ -f /etc/bashrc ]] && source /etc/bashrc
 
 # User specific aliases and functions
 export PATH=~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
 export LS_COLORS='no=00:fi=00:di=36:ln=01;34:pi=40;33:so=35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=32:*.cmd=32:*.exe=32:*.com=32:*.btm=32:*.bat=32:*.sh=32:*.csh=32:*.tar=31:*.tgz=01;31:*.arj=31:*.taz=31:*.lzh=31:*.zip=31:*.z=31:*.Z=31:*.gz=31:*.bz2=31:*.bz=31:*.tz=31:*.rpm=31:*.cpio=31:*.jpg=35:*.gif=35:*.bmp=35:*.xbm=35:*.xpm=35:*.png=35:*.tif=35:'
 export VISUAL=/usr/bin/vim
-[[ -z $DISPLAY ]] || [[ "$DISPLAY" == "localhost" ]] && export DISPLAY=":0.0"
+export EDITOR=/usr/bin/vim
+[[ -z $DISPLAY || "$DISPLAY" == "localhost" ]] && export DISPLAY=":0.0"
 export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W \$ \[\033[00m\]'
 
 shopt -s nocaseglob
@@ -20,18 +19,9 @@ shopt -s cdspell
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
-case $TERM in
-	xterm*|dtterm|Eterm|eterm)
-		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-		;;
-	screen)
-		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-		;;
-esac
-
 function word()
 {
-	grep $* /usr/share/dict/web2 
+    grep $* /usr/share/dict/web2
 }
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
@@ -54,12 +44,12 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias g='git'
 
-if [ "$(uname)" == "Linux" ]; then
+if [[ "$(uname)" == "Linux" ]]; then
     # linux specific config
     echo Welcome to Linux!
     alias open="xdg-open"
     alias copy="xsel -ib"
-elif [ "$(uname)" == "Darwin" ]; then
+elif [[ "$(uname)" == "Darwin" ]]; then
     # macOS specific config
     echo Welcome to macOS!
     alias ls="ls -G"
@@ -71,7 +61,7 @@ elif [ "$(uname)" == "Darwin" ]; then
     alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
     alias copy='pbcopy'
     alias matlab='/Applications/MATLAB_R2017b.app/bin/matlab -nodesktop -nosplash'
-elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
+elif [[ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]]; then
     # Cygwin specific config
     echo Welcome to Cygwin!
     alias open="cygstart"
@@ -82,30 +72,28 @@ elif [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]; then
 fi
 
 # Python Configuration
-export PYTHONSTARTUP=$HOME/.pythonrc
+export PYTHONSTARTUP=${HOME}/.pythonrc
 
 # Source Git Completion
-if [ -f $HOME/git-completion.sh ]; then
-    . $HOME/git-completion.bash
-fi
-
-# Source local definitions
-if [ -f $HOME/.bashrc.local ]; then
-	. $HOME/.bashrc.local
-fi
+[[ -f "${HOME}/git-completion.sh" ]] && source "${HOME}/git-completion.bash"
 
 # Git Bash Prompt
 function git_prompt {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo " ("${ref#refs/heads/}")"
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    mod=$(git status --porcelain 2> /dev/null)
+    echo " (${ref#refs/heads/}${mod:+*})"
 }
 
-if [ -f $HOME/.bash-git-prompt/gitprompt.sh ]; then
+if [[ -f $HOME/.bash-git-prompt/gitprompt.sh ]]; then
     GIT_PROMPT_ONLY_IN_REPO=1
-    source $HOME/.bash-git-prompt/gitprompt.sh
+    source "$HOME/.bash-git-prompt/gitprompt.sh"
 else
     echo 'Bash Git Prompt is not installed. Install with:'
     echo '  cd ~ && git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1'
 
     export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W\[\033[35m\]$(git_prompt)\[\033[36m\] \$ \[\033[00m\]'
 fi
+
+# Source local definitions
+[[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
+
