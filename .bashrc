@@ -3,6 +3,10 @@
 # Source global definitions
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 
+shopt -s nocaseglob
+shopt -s histappend
+shopt -s cdspell
+
 # User specific aliases and functions
 export PATH=~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
@@ -12,16 +16,22 @@ export EDITOR=/usr/bin/vim
 [[ -z $DISPLAY || "$DISPLAY" == "localhost" ]] && export DISPLAY=":0.0"
 export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W \$ \[\033[00m\]'
 
-shopt -s nocaseglob
-shopt -s histappend
-shopt -s cdspell
-
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
 function word()
 {
     grep $* /usr/share/dict/web2
+}
+
+# Set the title of a Terminal window
+function settitle() {
+    if [ -n "$STY" ] ; then         # We are in a screen session
+        echo "Setting screen titles to $@"
+        printf "\033k%s\033\\" "$@"
+        screen -X eval "at \\# title $@" "shelltitle $@"
+    fi
+    printf "\033]2;%s\a" "$@"
 }
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
@@ -46,12 +56,12 @@ alias g='git'
 
 if [[ "$(uname)" == "Linux" ]]; then
     # linux specific config
-    echo Welcome to Linux!
+    echo -n "Welcome to Linux! "
     alias open="xdg-open"
     alias copy="xsel -ib"
 elif [[ "$(uname)" == "Darwin" ]]; then
     # macOS specific config
-    echo Welcome to macOS!
+    echo -n "Welcome to macOS! "
     alias ls="ls -G"
     alias qtfull="osascript -e 'tell application \"Quicktime Player\" to present movie 1'"
     alias sc="ssh -L 4200:localhost:4243 luke@chewbacca"
@@ -63,7 +73,7 @@ elif [[ "$(uname)" == "Darwin" ]]; then
     alias matlab='/Applications/MATLAB_R2017b.app/bin/matlab -nodesktop -nosplash'
 elif [[ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]]; then
     # Cygwin specific config
-    echo Welcome to Cygwin!
+    echo -n "Welcome to Cygwin! "
     alias open="cygstart"
     alias copy="putclip"
     alias bfg='java -jar c://cygwin64//home//lmfranka//bin//bfg.jar'
@@ -74,25 +84,49 @@ fi
 # Python Configuration
 export PYTHONSTARTUP=${HOME}/.pythonrc
 
-# Source Git Completion
-[[ -f "${HOME}/git-completion.sh" ]] && source "${HOME}/git-completion.bash"
+missing_features=( )
 
-# Git Bash Prompt
-function git_prompt {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    mod=$(git status --porcelain 2> /dev/null)
-    echo " (${ref#refs/heads/}${mod:+*})"
-}
+# Source Git Completion
+if [[ -f ~/.git-completion.bash ]]; then
+  source ~/.git-completion.bash
+  __git_complete g __git_main
+  __git_complete config __git_main
+else
+  missing_features+=( "-git-completion" )
+  # Installation instructions:
+  #  1. Download https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+  #  2. Save as ${HOME}/.git-completion.bash
+fi
 
 if [[ -f $HOME/.bash-git-prompt/gitprompt.sh ]]; then
-    GIT_PROMPT_ONLY_IN_REPO=1
-    source "$HOME/.bash-git-prompt/gitprompt.sh"
+  GIT_PROMPT_ONLY_IN_REPO=1
+  source "$HOME/.bash-git-prompt/gitprompt.sh"
 else
-    echo 'Bash Git Prompt is not installed. Install with:'
-    echo '  cd ~ && git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1'
+  missing_features+=( "-gitprompt" )
 
-    export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W\[\033[35m\]$(git_prompt)\[\033[36m\] \$ \[\033[00m\]'
+  # Git Bash Prompt
+  function git_prompt {
+      ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+      mod=$(git status --porcelain 2> /dev/null)
+      echo " (${ref#refs/heads/}${mod:+*})"
+  }
+
+  # Installation instructions:
+  #   cd ~ && git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1
+
+  # basic Git prompt
+  export PS1='\[\033[32m\]\u@\h \[\033[36m\]\W\[\033[35m\]$(git_prompt)\[\033[36m\] \$ \[\033[00m\]'
 fi
+
+if [[ -f /usr/share/autojump/autojump.bash ]]; then
+  source /usr/share/autojump/autojump.bash
+else
+  missing_features+=( "-autojump" )
+  # Installation instructions:
+  #  https://github.com/wting/autojump
+fi
+
+echo "${missing_features[@]}"
 
 # Source local definitions
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
