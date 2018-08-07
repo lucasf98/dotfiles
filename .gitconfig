@@ -1,11 +1,12 @@
 [alias]
     last = log -1 HEAD
-    lg = log --oneline --graph --decorate --all
-    lol = log --oneline --graph --decorate
-    lola = log --oneline --graph --decorate --all
+    lo = log --oneline --graph --decorate -10
+    la = log --oneline --graph --decorate --all -10
+    laa = log --oneline --graph --decorate --all
     co = checkout
     cob = checkout -b
     br = branch
+    brd = branch -d
     st = status
     ci = commit
     ls = ls-tree -r master --name-only
