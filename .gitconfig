@@ -1,18 +1,21 @@
 [alias]
     last = log -1 HEAD
     lo = log --oneline --graph --decorate -10
-    la = log --oneline --graph --decorate --all -10
-    laa = log --oneline --graph --decorate --all
+    la = log --oneline --graph --decorate --branches=* -10
+    laa = log --oneline --graph --decorate --branches=*
+    laaa = log --oneline --graph --decorate --all
     co = checkout
     cob = checkout -b
     br = branch
     brd = branch -d
     st = status
     ci = commit
+    cia = commit --amend
     ls = ls-tree -r master --name-only
     unstage = reset HEAD --
     whatadded = log --diff-filter=A --
-    pushreview = push origin HEAD:refs/for/master
+    pr = push origin HEAD:refs/for/master
+    rb = rebase
 
 [core]
     excludesFile = ~/.gitignore
