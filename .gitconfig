@@ -1,29 +1,28 @@
 [alias]
-    last = log -1 HEAD
-    l = log --oneline --graph --decorate -10
-    la = log --oneline --graph --decorate --branches=* -10
-    laa = log --oneline --graph --decorate --branches=*
-    laaa = log --oneline --graph --decorate --all
-    co = checkout
+    br = branch
+    brdaa = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
+    brd = branch --delete
+    cia = commit --amend
+    ci = commit
+    cm = checkout master
     cob = checkout -b
     cobm = checkout --track origin/master -b
-    cm = checkout master
+    co = checkout
     cp = cherry-pick
-    br = branch
-    brd = branch --delete
-    brdaa = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
-    st = status
-    s = status --short
-    ci = commit
-    cia = commit --amend
+    laaa = log --oneline --graph --decorate --all
+    laa = log --oneline --graph --decorate --branches=*
+    la = log --oneline --graph --decorate --branches=* -10
+    last = log -1 HEAD
+    l = log --oneline --graph --decorate -10
     ls = ls-tree -r master --name-only
-    ua = reset HEAD --
-    whatadded = log --diff-filter=A --
     prb = pull --rebase
     rb = rebase
     rc = rebase --continue
     rs = rebase --skip
-    prb = pull --rebase
+    s = status --short
+    st = status
+    ua = reset HEAD --
+    whatadded = log --diff-filter=A --
 
 [core]
     excludesFile = ~/.gitignore
