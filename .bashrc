@@ -1,5 +1,8 @@
 # .bashrc
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Source global definitions
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 
@@ -32,6 +35,13 @@ function settitle() {
         screen -X eval "at \\# title $@" "shelltitle $@"
     fi
     printf "\033]2;%s\a" "$@"
+}
+
+function adbv() {
+  TEMPFILE=$(mktemp)
+  adb pull "$1" "$TEMPFILE"
+  vim "$TEMPFILE"
+  adb push "$TEMPFILE" "$1"
 }
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
