@@ -6,9 +6,11 @@
     laaa = log --oneline --graph --decorate --all
     co = checkout
     cob = checkout -b
+    cobm = checkout --track origin/master -b
     cm = checkout master
     br = branch
     brd = branch --delete
+    brdaa = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
     st = status
     s = status --short
     ci = commit
@@ -16,7 +18,7 @@
     ls = ls-tree -r master --name-only
     ua = reset HEAD --
     whatadded = log --diff-filter=A --
-    pr = push origin HEAD:refs/for/master
+    prb = pull --rebase
     rb = rebase
     rc = rebase --continue
     rs = rebase --skip
