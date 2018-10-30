@@ -108,6 +108,7 @@ elif [[ "$(uname)" == "Darwin" ]]; then
     alias cdr2iso="hdiutil makehybrid -iso -joliet -o"
     alias copy='pbcopy'
     alias matlab='/Applications/MATLAB_R2017b.app/bin/matlab -nodesktop -nosplash'
+    alias meld='open /Applications/Xcode.app/Contents/Applications/FileMerge.app/'
 elif [[ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ]]; then
     # Cygwin specific config
     echo -n "Welcome to Cygwin! "
@@ -157,6 +158,8 @@ fi
 
 if [[ -f /usr/share/autojump/autojump.bash ]]; then
   source /usr/share/autojump/autojump.bash
+elif [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]]; then
+  source /Users/frankart/.autojump/etc/profile.d/autojump.sh
 else
   missing_features+=( "-autojump" )
   # Installation instructions:
