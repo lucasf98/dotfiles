@@ -10,6 +10,8 @@ shopt -s nocaseglob
 shopt -s histappend
 shopt -s cdspell
 
+set -o ignoreeof
+
 # User specific aliases and functions
 export PATH=~/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
@@ -73,7 +75,7 @@ function rg() {
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 /bin/ls --color=auto &> /dev/null && alias ls="ls --color=auto"
-alias l="ls -al"
+alias l="ls -alh"
 alias ..="cd .."
 alias ...="cd ../../"
 alias psh="pushd"
