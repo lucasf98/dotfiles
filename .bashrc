@@ -33,21 +33,6 @@ case $TERM in
 		;;
 esac
 
-function eecoex() {
-     echo ==== $1 ====
-     adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body $1
-     adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body EXECUTE
-}
-
-function wait_for_eecoex() {
-    while [ -z ]; do
-      adb shell am broadcast -a com.google.eecoexer.action.LISTENER --es sms_body STATUS > /dev/null
-      i=`adb shell 'cat /storage/emulated/0/Android/data/com.google.eecoexer/files/slave_ack'`
-      if [ $i -eq 0 ]; then break; fi;
-      sleep 5
-    done
-}
-
 function word() {
     grep $* /usr/share/dict/web2
 }
