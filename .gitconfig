@@ -1,24 +1,26 @@
 [alias]
     br = branch
-    brdaa = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
     brd = branch --delete
-    cia = commit --amend
+    brdaa = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
     ci = commit
+    cia = commit --amend
     cm = checkout master
-    cob = checkout -b
-    cobm = checkout --track origin/master -b
     co = checkout
+    cob = checkout --track origin/master -b
     cp = cherry-pick
-    laaa = log --oneline --graph --decorate --all
-    laa = log --oneline --graph --decorate --branches=*
-    la = log --oneline --graph --decorate --branches=* -10
-    last = log -1 HEAD
+    dc = diff --cached
     l = log --oneline --graph --decorate -10
+    la = log --oneline --graph --decorate --branches=* -40
+    laa = log --oneline --graph --decorate --branches=*
+    laaa = log --oneline --graph --decorate --all
+    last = log -1 HEAD
     ls = ls-tree -r master --name-only
     prb = pull --rebase
     rb = rebase
-    rc = rebase --continue
-    rs = rebase --skip
+    rba = rebase --abort
+    rbc = rebase --continue
+    rbi = rebase --interactive --autosquash
+    rbs = rebase --skip
     s = status --short
     st = status
     ua = reset HEAD --
@@ -35,3 +37,5 @@
 
 [color]
     ui = auto
+[merge]
+    conflictstyle = diff3
