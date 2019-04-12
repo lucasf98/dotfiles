@@ -78,6 +78,12 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias g='git'
 
+function mcd() {
+    mkdir -p $1
+    cd $1
+    pwd
+}
+
 if [[ "$(uname)" == "Linux" ]]; then
     # linux specific config
     echo -n "Welcome to Linux! "
