@@ -8,6 +8,7 @@
     co = checkout
     cob = checkout --track origin/master -b
     cp = cherry-pick
+    d = diff
     dc = diff --cached
     l = log --oneline --graph --decorate -10
     la = log --oneline --graph --decorate --branches=* -40
