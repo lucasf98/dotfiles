@@ -29,6 +29,7 @@
 
 [core]
     excludesFile = ~/.gitignore
+    pager = less -FRSX
 
 [include]
     path = ~/.gitconfig.local
