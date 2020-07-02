@@ -152,7 +152,7 @@ fi
 if [[ -f /usr/share/autojump/autojump.bash ]]; then
   source /usr/share/autojump/autojump.bash
 elif [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]]; then
-  source /Users/frankart/.autojump/etc/profile.d/autojump.sh
+  source $HOME/.autojump/etc/profile.d/autojump.sh
 else
   missing_features+=( "-autojump" )
   # Installation instructions:
